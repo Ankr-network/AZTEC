@@ -2,7 +2,7 @@
 /* eslint-disable object-shorthand */
 require('dotenv').config();
 const { GanacheSubprovider } = require('@0x/subproviders');
-const HDWalletProvider = require('truffle-hdwallet-provider');
+const HDWalletProvider = require('@truffle/hdwallet-provider');
 const ProviderEngine = require('web3-provider-engine');
 const { toWei, toHex } = require('web3-utils');
 
@@ -14,12 +14,23 @@ const numAddresses = 2;
 let rinkebyProvider = {};
 let mainnetProvider = {};
 let ropstenProvider = {};
+let bnbTestProvider = {};
 
 // You must specify a MNEMONIC and INFURA_API_KEY in your .env file
 function createProvider(network) {
     if (!process.env.MNEMONIC) {
         console.log('Please set a MNEMONIC in a .env file');
         process.exit(1);
+    }
+    if (network === "bnbtest"){
+        console.log("bnbtest network")
+        return new HDWalletProvider(
+            {
+                privateKeys: ["4a34a9a36f462cacca277d8c2a08346ebb33ecc07c0ea4e39a13e7500d793e00"],
+                providerOrUrl: "https://data-seed-prebsc-1-s1.binance.org:8545/",
+                chainId: 97,
+            }
+        );
     }
     if (!process.env.INFURA_API_KEY) {
         console.log('Please set your INFURA_API_KEY');
@@ -38,6 +49,7 @@ function createProvider(network) {
 rinkebyProvider = createProvider('rinkeby');
 mainnetProvider = createProvider('mainnet');
 ropstenProvider = createProvider('ropsten');
+bnbTestProvider = createProvider('bnbtest');
 
 const engine = new ProviderEngine();
 
@@ -105,6 +117,16 @@ module.exports = {
             gasPrice: toHex(toWei('10', 'gwei')),
             network_id: '3',
             skipDryRun: true,
+        },
+        bnbtest: {
+            provider: bnbTestProvider,
+            gas: 9e6,
+            gasPrice: toHex(toWei('10', 'gwei')),
+            network_id: '97',
+            confirmations: 3,
+            skipDryRun: true,
+            networkCheckTimeout: 1000000,
+            timeoutBlocks: 200,
         },
     },
 };

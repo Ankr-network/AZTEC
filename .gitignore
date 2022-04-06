@@ -52,3 +52,6 @@ packages/aws-lambda/signer/packaged_dev.yaml
 packages/aws-lambda/signer/packaged_prod.yaml
 packages/aws-lambda/packaged_dev.yaml
 packages/aws-lambda/template.yaml
+
+packages/protocol/.env
+packages/integration-test/.env

@@ -9,7 +9,9 @@
     "lint:js": "eslint --ignore-path ../../.eslintignore .",
     "test:testNets": "scripts/test.sh",
     "test:ropsten": "truffle test ./test/integration.js --network ropsten",
-    "test:rinkeby": "truffle test ./test/integration.js --network rinkeby"
+    "test:rinkeby": "truffle test ./test/integration.js --network rinkeby",
+    "test:bnbtest": "truffle test ./test/integration.js --network bnbtest"
+
   },
   "repository": {
     "type": "git",
@@ -29,14 +31,15 @@
   },
   "homepage": "https://github.com/AztecProtocol/AZTEC#readme",
   "devDependencies": {
-    "@aztec/bn128": "0.0.0-semantically-released",
-    "@aztec/contract-addresses": "0.0.0-semantically-released",
-    "@aztec/contract-artifacts": "0.0.0-semantically-released",
-    "@aztec/dev-utils": "0.0.0-semantically-released",
-    "@aztec/secp256k1": "0.0.0-semantically-released",
+    "@aztec/contract-addresses": "1.19.0",
+    "@aztec/contract-artifacts": "1.22.0",
+    "@aztec/bn128": "^1.3.2",
+    "@aztec/dev-utils": "^2.4.0",
+    "@aztec/secp256k1": "^1.2.0",
+    "@aztec/typed-data": "^1.2.0",
     "@truffle/contract": "^4.1.0",
-    "aztec.js": "0.0.0-semantically-released",
-    "bn.js": "^5.0.0",
-    "truffle": "^5.1.0"
+    "aztec.js": "^0.18.1",
+    "bn.js": "^4.11.8",
+    "truffle": "^5.1.2"
   }
 }

@@ -20,13 +20,14 @@ module.exports = (deployer, network) => {
                 useLocal ? process.env.LOCAL_TRUSTED_GSN_SIGNER_ADDRESS : process.env.TRUSTED_GSN_SIGNER_ADDRESS,
             )
             .then(async (contract) => {
-                const WEB3_PROVIDER_URL = 'http://127.0.0.1:8545';
-                const web3 = new Web3(WEB3_PROVIDER_URL);
+                // const WEB3_PROVIDER_URL = 'http://127.0.0.1:8545';
+                //  const web3 = new Web3(WEB3_PROVIDER_URL);
                 const proxyAddress = await contract.proxyAddress.call();
-                await fundRecipient(web3, {
-                    recipient: proxyAddress,
-                    amount: toWei('1'),
-                });
+                //  await fundRecipient(web3, {
+                //        recipient: proxyAddress,
+                //       amount: toWei('1'),
+                //    });
+                console.log("proxyAddress", proxyAddress)
             });
     }
 

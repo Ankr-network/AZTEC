@@ -3,11 +3,13 @@ const { isUndefined } = require('lodash');
 const mainnetAddresses = require('../addresses/mainnet');
 const rinkebyAddresses = require('../addresses/rinkeby');
 const ropstenAddresses = require('../addresses/ropsten');
+const bnbtestAddresses = require('../addresses/bnbtest');
 
 const NetworkId = {
     Mainnet: '1',
     Ropsten: '3',
     Rinkeby: '4',
+    BNBTest: '97',
     Ganache: '1234',
 };
 
@@ -20,6 +22,8 @@ const networkToAddresses = {
     },
     '4': {
         ...rinkebyAddresses,
+    },'97': {
+        ...bnbtestAddresses,
     },
 };
 

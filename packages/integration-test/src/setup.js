@@ -1,6 +1,8 @@
 /* eslint-disable func-names */
 /* global web3 */
 const { getContractAddressesForNetwork, NetworkId: networkIDs } = require('@aztec/contract-addresses');
+
+
 const contractArtifacts = require('@aztec/contract-artifacts');
 const {
     constants: { ERC20_SCALING_FACTOR },
@@ -8,6 +10,7 @@ const {
 } = require('@aztec/dev-utils');
 const BN = require('bn.js');
 const TruffleContract = require('@truffle/contract');
+const bnbtestAddresses = require('../../contract-addresses/addresses/bnbtest');
 
 const { capitaliseFirstChar } = require('./utils');
 
@@ -25,8 +28,8 @@ class Setup {
         this.initialiseConfig(config);
 
         this.NETWORK = this.config.NETWORK;
-        const networks = ['ropsten', 'rinkeby', 'kovan', 'mainnet'];
-
+        const networks = ['ropsten', 'rinkeby', 'kovan', 'mainnet', 'bnbtest'];
+        networkIDs[capitaliseFirstChar('bnbtest')] = '97'
         if (networks.includes(this.NETWORK)) {
             console.log('configuring integration test for', this.NETWORK, 'network');
 
@@ -42,11 +45,13 @@ class Setup {
             this.sender = sender;
 
             this.networkId = networkIDs[capitaliseFirstChar(this.NETWORK)];
+            console.log('networkId',this.networkId);
+
             this.contractAddresses = this.getAddresses();
             this.contractPromises = this.getContractPromises();
         } else {
             throw new AztecError(codes.UNSUPPORTED_NETWORK, {
-                message: 'Network not recognised, please input: `ropsten`, `rinkeby`, `kovan` or `mainnet`',
+                message: 'Network not recognised, please input: `ropsten`, `rinkeby`, `kovan`,`bnbtest`  or `mainnet`',
                 inputNetwork: this.NETWORK,
             });
         }
@@ -82,8 +87,13 @@ class Setup {
      * @method getAddresses() - get all the deployed contract addresses for a particular network
      */
     getAddresses() {
-        const contractAddresses = getContractAddressesForNetwork(this.networkId);
-
+        let contractAddresses;
+        if (this.networkId === '97')
+        {
+            contractAddresses = bnbtestAddresses;
+        } else  {
+            contractAddresses= getContractAddressesForNetwork(this.networkId);
+        }
         if (contractAddresses === undefined) {
             throw new AztecError(codes.NO_CONTRACT_ADDRESSES, {
                 message: 'No contract addresses exist for the given network ID in @aztec/contract-addresses',
